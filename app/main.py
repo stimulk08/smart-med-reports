@@ -1,9 +1,11 @@
-import uvicorn
 from fastapi import FastAPI
+from api.routes.routes import app_router
 
-app = FastAPI()
+
+def bootstrap() -> FastAPI:
+    application = FastAPI()
+    application.include_router(app_router)
+    return application
 
 
-@app.get('/')
-def index():
-    return {"message": "Hello World"}
+app = bootstrap()
