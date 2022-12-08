@@ -83,3 +83,4 @@ class Specialization(Database):
     id = Column(Integer, primary_key=True)
     doctors = relationship("Doctor", secondary=association_table, back_populates="specialization")
     illness = relationship("Specialization", back_populates="specialization")
+
