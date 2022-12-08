@@ -46,20 +46,41 @@ class Report(Database):
     __tablename__ = "report"
     id = Column(Integer, primary_key=True)
     owner_id = Column(Integer, ForeignKey("doctor.id"))
-    parent = relationship("Doctor", back_populates="children")
+    parent = relationship("Doctor", back_populates="reports")
 
 
 class Doctor(Database):
     __tablename__ = "doctor"
     id = Column(Integer, primary_key=True)
-    patients = relationship("Patient", secondary=association_table)
-    reports = relationship("doctor", back_populates="report")
-    specialization = None
+    patients = relationship("Patient", secondary=association_table, back_populates="doctors")
+    reports = relationship("Report", secondary=association_table, back_populates="owner_id")
+    specialization = relationship("Specialization", secondary=association_table, back_populates="doctors")
 
 
 class Patient(Database):
     __tablename__ = "patient"
     id = Column(Integer, primary_key=True)
-    illness = None
-    doctors = None
-    visits = None
+    illness = relationship("Illness", secondary=association_table, back_populates='patients')
+    doctors = relationship("Doctor", secondary=association_table, back_populates='patients')
+    visits = relationship("Visit", secondary=association_table, back_populates='patients')
+
+
+class Illness(Database):
+    __tablename__ = "illness"
+    id = Column(Integer, primary_key=True)
+    patients = relationship("Patient", secondary=association_table, back_populates='illness')
+    specialization = relationship("Specialization", secondary=association_table, back_populates='illness')
+
+
+class Visit(Database):
+    __tablename__ = "visit"
+    id = Column(Integer, primary_key=True)
+    patients = relationship("Patient", back_populates='illness')
+
+
+class Specialization(Database):
+    __tablename__ = "specialization"
+    id = Column(Integer, primary_key=True)
+    doctors = relationship("Doctor", secondary=association_table, back_populates="specialization")
+    illness = relationship("Specialization", back_populates="specialization")
+
