@@ -54,7 +54,7 @@ class Doctor(Database):
     id = Column(Integer, primary_key=True)
     patients = relationship("Patient", secondary=association_table, back_populates="doctors")
     reports = relationship("Report", secondary=association_table, back_populates="owner_id")
-    illness_cure = relationship("Illness", secondary=association_table, back_populates="doctors")
+    specialization = relationship("Specialization", secondary=association_table, back_populates="doctors")
 
 
 class Patient(Database):
@@ -66,13 +66,20 @@ class Patient(Database):
 
 
 class Illness(Database):
-    __tabalename__ = "illness"
+    __tablename__ = "illness"
     id = Column(Integer, primary_key=True)
     patients = relationship("Patient", secondary=association_table, back_populates='illness')
-    doctors = relationship("Doctor", secondary=association_table, back_populates='illness_cure')
+    specialization = relationship("Specialization", secondary=association_table, back_populates='illness')
 
 
 class Visit(Database):
-    _tabalename__ = "visit"
+    __tablename__ = "visit"
     id = Column(Integer, primary_key=True)
-    patients = relationship("Patient", secondary=association_table, back_populates='visits')
+    patients = relationship("Patient", back_populates='illness')
+
+
+class Specialization(Database):
+    __tablename__ = "specialization"
+    id = Column(Integer, primary_key=True)
+    doctors = relationship("Doctor", secondary=association_table, back_populates="specialization")
+    illness = relationship("Specialization", back_populates="specialization")
