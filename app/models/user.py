@@ -46,7 +46,7 @@ class Report(Database):
     __tablename__ = "report"
     id = Column(Integer, primary_key=True)
     owner_id = Column(Integer, ForeignKey("doctor.id"))
-    parent = relationship("Doctor", back_populates="children")
+    parent = relationship("Doctor", back_populates="reports")
 
 
 class Doctor(Database):
