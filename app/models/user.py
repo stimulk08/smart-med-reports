@@ -64,7 +64,6 @@ class Doctor(Database):
 
 class Patient(Database):
     __tablename__ = "patient"
-
     login = Column(String)
     password = Column(String)
     first_name = Column(String)

@@ -9,6 +9,7 @@ class PatientCreate(BaseModel):
 
 
 class Patient(BaseModel):
-    id: int
     login: str
     password: str
+    first_name: str
+    last_name: str
