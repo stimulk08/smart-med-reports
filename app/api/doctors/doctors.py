@@ -1,15 +1,11 @@
-from fastapi import HTTPException, APIRouter, Depends
-from starlette import status
+from fastapi import APIRouter, Depends
 
 from app.api.doctors import doctors_repository
 from app.api.doctors.dto.create_doctor import DoctorCreateDto
-# from app.api.doctors.dto.create_doctor DoctorCreateDto
-from app.db.database import Database, get_db
+from app.api.patients.dto.create_patient import PatientCreateDto
+from app.db.database import get_db
 
-from sqlalchemy import Column, String, Integer
-from sqlalchemy.orm import Session, relationship
-
-from app.models.user import association_table
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -42,3 +38,8 @@ def update_doctor(id: int, update_dto: object):
 @router.post('/')
 def create_doctor(dto: DoctorCreateDto, db: Session = Depends(get_db)):
     return doctors_repository.create_doctor(db, dto)
+
+
+@router.patch('/{id}/assign/patients/{patient_id}')
+def assign_patient(id: int, patient_id: int, db: Session = Depends(get_db)):
+    return doctors_repository.assign_patient(id, patient_id, db)
