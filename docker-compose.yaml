@@ -3,8 +3,10 @@ version: '3'
 services:
   app:
     build: .
+    container_name: smart-med-reports
+    network_mode: host
     ports:
-      - "8000:8000/tcp"
+      - "3000:000"
     command: bash -c "cd app && uvicorn main:app"
     env_file:
       - .env
