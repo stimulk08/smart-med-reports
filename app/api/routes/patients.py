@@ -1,4 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+
+from app.core.config import get_db
+from app.db.user_repository import create_user
+from app.models.schemas import PatientCreate
 
 router = APIRouter()
 
@@ -31,3 +36,8 @@ def update_patient(id: int, update_dto: object):
 @router.post('/')
 def delete_patient(dto):
     return {id, *dto}
+
+@router.post('/')
+def make_patient(dto:PatientCreate, db:Session=Depends(get_db)):
+    return create_user(db, dto)
+
