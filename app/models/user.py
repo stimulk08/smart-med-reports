@@ -51,6 +51,11 @@ class Report(Database):
 
 class Doctor(Database):
     __tablename__ = "doctor"
+
+    login = Column(String)
+    password = Column(String)
+    first_name = Column(String)
+    last_name = Column(String)
     id = Column(Integer, primary_key=True)
     patients = relationship("Patient", secondary=association_table, back_populates="doctors")
     reports = relationship("Report", secondary=association_table, back_populates="owner_id")
@@ -59,10 +64,15 @@ class Doctor(Database):
 
 class Patient(Database):
     __tablename__ = "patient"
+
+    login = Column(String)
+    password = Column(String)
+    first_name = Column(String)
+    last_name = Column(String)
     id = Column(Integer, primary_key=True)
-    illness = relationship("Illness", secondary=association_table, back_populates='patients')
-    doctors = relationship("Doctor", secondary=association_table, back_populates='patients')
-    visits = relationship("Visit", secondary=association_table, back_populates='patients')
+    # illness = relationship("Illness", secondary=association_table, back_populates='patients')
+    # doctors = relationship("Doctor", secondary=association_table, back_populates='patients')
+    # visits = relationship("Visit", secondary=association_table, back_populates='patients')
 
 
 class Illness(Database):
