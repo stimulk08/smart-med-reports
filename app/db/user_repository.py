@@ -1,11 +1,17 @@
 from sqlalchemy.orm import Session
 
-from app.models.schemas import PatientCreate, Patient
+from app.models.user import Patient
 
 
-def create_user(db: Session, user: PatientCreate):
-    db_user = Patient(**user.__dict__)
-    db.add(db_user)
+# from app.models.schemas import Patient
+
+
+def create_user(db: Session, user: Patient):
+    db.add(user)
     db.commit()
-    db.refresh(db_user)
-    return db_user
+    db.refresh(user)
+    return user
+
+def get_all_patients(db: Session):
+    return db.query(Patient).all()
+

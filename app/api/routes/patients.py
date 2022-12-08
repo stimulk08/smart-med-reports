@@ -1,17 +1,17 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-
-from app.core.config import get_db
+from app.db import user_repository
+from app.core.config import get_db, Database, engine
 from app.db.user_repository import create_user
 
-from app.models.schemas import PatientCreate
+from app.models.schemas import Patient
 
 router = APIRouter()
-
+Database.metadata.create_all(engine)
 
 @router.get('/')
-def get_all_patients():
-    pass
+def get_all_patients(db: Session = Depends(get_db)):
+    return user_repository.get_all_patients(db)
 
 
 @router.get('/{id}')
@@ -35,10 +35,5 @@ def update_patient(id: int, update_dto: object):
 
 
 @router.post('')
-def delete_patient(dto):
-    return {id, *dto}
-
-
-@router.post('')
-def make_patient(dto: PatientCreate, db: Session = Depends(get_db)):
+def make_patient(dto: Patient, db: Session = Depends(get_db)):
     return create_user(db, dto)
