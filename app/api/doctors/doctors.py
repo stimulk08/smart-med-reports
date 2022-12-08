@@ -36,9 +36,8 @@ def delete_doctor(id: int, db: Session = Depends(get_db)):
 
 
 @router.patch('/{id}')
-def update_doctor(id: int, dto: PatientCreateDto, db: Session = Depends(get_db)):
+def update_doctor(id: int, dto: DoctorCreateDto, db: Session = Depends(get_db)):
     return doctors_repository.update_doctor(db, id, dto)
-
 
 @router.post('/')
 def create_doctor(dto: DoctorCreateDto, db: Session = Depends(get_db)):
