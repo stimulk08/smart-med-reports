@@ -6,3 +6,9 @@ class PatientCreateDto(BaseModel):
     password: str
     first_name: str
     last_name: str
+    # doctors: Doctor[]
+
+    class Config:
+        orm_mode = True
+
+

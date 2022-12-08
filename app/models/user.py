@@ -1,13 +1,15 @@
 import enum
-from sqlalchemy import Column, Integer, String, Enum
+from sqlalchemy import Column, Integer, String, Enum, ForeignKey, Table
 from sqlalchemy.dialects.postgresql import JSON
 
-# association_table = Table(
-#     "association_table",
-#     Database.metadata,
-#     Column("left_id", ForeignKey("left_table.id")),
-#     Column("right_id", ForeignKey("right_table.id")),
-# )
+from app.db.database import Database
+
+association_table = Table(
+    "association_table",
+    Database.metadata,
+    Column("left_id", ForeignKey("patient.id")),
+    Column("right_id", ForeignKey("doctor.id")),
+)
 
 
 # class FieldType(enum.Enum):
