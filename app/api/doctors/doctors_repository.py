@@ -1,11 +1,7 @@
-from fastapi import HTTPException
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship, Session
-from starlette import status
 
 from app.api.doctors.dto.create_doctor import DoctorCreateDto
-from app.api.patients.dto.create_patient import PatientCreateDto
-from app.api.patients.patients_repository import get_patient_by_id
 from app.db.database import Database
 from app.models.user import association_table
 
