@@ -1,8 +1,6 @@
 import enum
-from sqlalchemy import Column, Integer, String, Table, ForeignKey, ARRAY, Enum
+from sqlalchemy import Column, Integer, String, Enum
 from sqlalchemy.dialects.postgresql import JSON
-from sqlalchemy.orm import relationship
-from ..core.config import Database
 
 # association_table = Table(
 #     "association_table",
@@ -12,18 +10,18 @@ from ..core.config import Database
 # )
 
 
-class FieldType(enum.Enum):
-    yesNo = 1
-    text = 2
-    number = 3
-    range = 4
+# class FieldType(enum.Enum):
+#     yesNo = 1
+#     text = 2
+#     number = 3
+#     range = 4
 
-
-class Field(Database):
-    __tablename__ = "field"
-    id = Column(Integer, primary_key=True)
-    type = Column(Enum(FieldType))
-    value = Column(JSON)
+#
+# class Field(Database):
+#     __tablename__ = "field"
+#     id = Column(Integer, primary_key=True)
+#     type = Column(Enum(FieldType))
+#     value = Column(JSON)
 
 
 # class User(Database):
@@ -61,17 +59,6 @@ class Field(Database):
 #     reports = relationship("Report", secondary=association_table, back_populates="owner_id")
 #     specialization = relationship("Specialization", secondary=association_table, back_populates="doctors")
 
-
-class Patient(Database):
-    __tablename__ = "patients"
-    login = Column(String)
-    password = Column(String)
-    first_name = Column(String)
-    last_name = Column(String)
-    id = Column(Integer, primary_key=True, index=True)
-    # illness = relationship("Illness", secondary=association_table, back_populates='patients')
-    # doctors = relationship("Doctor", secondary=association_table, back_populates='patients')
-    # visits = relationship("Visit", secondary=association_table, back_populates='patients')
 
 
 # class Illness(Database):
