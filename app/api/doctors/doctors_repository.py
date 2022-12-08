@@ -1,5 +1,7 @@
+from fastapi import HTTPException
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship, Session
+from starlette import status
 
 from app.api.doctors.dto.create_doctor import DoctorCreateDto
 from app.db.database import Database
@@ -25,3 +27,27 @@ def create_doctor(db: Session, dto: DoctorCreateDto):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+
+def get_all_doctors(db: Session):
+    return db.query(Doctor).all()
+
+
+def delete_doctor(db: Session, _id: int):
+    doctor_delete = db.query(Doctor).filter(Doctor.id == _id).delete()
+    if doctor_delete is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Patient with id {_id} not found")
+    # doctor_delete = db.query(Doctor).filter(Doctor.id == _id).delete()
+    db.commit()
+    return "Done"
+
+
+def update_doctor(db: Session, _id: int, dto: DoctorCreateDto):
+    doctor = db.query(Doctor).filter(Doctor.id == _id)
+    if doctor is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Patient with id {_id} not found")
+    doctor.update(dto.dict())
+    db.commit()
+    return "done"
