@@ -4,19 +4,14 @@ from sqlalchemy.dialects.postgresql import JSON
 
 from app.db.database import Database
 
-patient_doctor_table = Table(
-    "patient_doctor",
-    Database.metadata,
-    Column("patient_id", ForeignKey("patient.id")),
-    Column("doctor_id", ForeignKey("doctor.id")),
-)
 
-patient_quizzes_table = Table(
-    "patient_reports",
-    Database.metadata,
-    Column("patient_id", ForeignKey("patient.id")),
-    Column("quiz_id", ForeignKey("quiz.id")),
-)
+#
+# patient_quizzes_table = Table(
+#     "patient_reports",
+#     Database.metadata,
+#     Column("patient_id", ForeignKey("patient.id")),
+#     Column("quiz_id", ForeignKey("quiz.id")),
+# )
 
 
 # class FieldType(enum.Enum):

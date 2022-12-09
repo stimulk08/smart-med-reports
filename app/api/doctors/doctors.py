@@ -10,7 +10,7 @@ from app.db.database import Database, get_db
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import Session, relationship
 
-from app.models.user import patient_doctor_table
+# from app.models.user import patient_doctor_table
 
 router = APIRouter()
 

@@ -2,25 +2,10 @@ from fastapi import HTTPException
 from starlette import status
 
 from app.api.patients.dto.create_patient import PatientCreateDto
-from app.db.database import Database
+from app.db.patient_doctor import Patient
 
-from sqlalchemy import Column, String, Integer, ForeignKey
-from sqlalchemy.orm import Session, relationship
+from sqlalchemy.orm import Session
 
-from app.models.user import patient_doctor_table, patient_quizzes_table
-
-
-class Patient(Database):
-    __tablename__ = "patient"
-    login = Column(String)
-    password = Column(String)
-    first_name = Column(String)
-    last_name = Column(String)
-    id = Column(Integer, primary_key=True, index=True)
-    reports = relationship("Quiz", secondary=patient_quizzes_table, back_populates="doctors")
-    # illness = relationship("Illness", secondary=association_table, back_populates='patients')
-    doctors = relationship("Doctor", secondary=patient_doctor_table, back_populates='patients')
-    # visits = relationship("Visit", secondary=association_table, back_populates='patients')
 
 
 def create_patient(db: Session, dto: PatientCreateDto):
