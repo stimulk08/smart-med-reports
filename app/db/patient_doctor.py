@@ -24,7 +24,7 @@ class Doctor(Database):
     last_name = Column(String)
     id = Column(Integer, primary_key=True)
     patients = relationship("Patient", secondary=patient_doctor_table, back_populates="doctors")
-    reports = relationship("Quiz", secondary=doctor_quiz_table, back_populates="doctors")
+    quizzes = relationship("Quiz", secondary=doctor_quiz_table, back_populates="doctors")
     tags = relationship("Tag", secondary=tag_doctor_table, back_populates='doctors')
 
 
