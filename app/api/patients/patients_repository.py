@@ -36,16 +36,16 @@ def get_all_patients(db: Session):
 
 
 def delete_patient(db: Session, _id: int):
-    patient_delete = db.query(Patient).filter(Patient.id == _id).delete()
-    if patient_delete is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Patient with id {_id} not found")
+    patient = db.query(Patient).get(_id)
+    patient.delete()
     db.commit()
+
     return "Done"
 
 
 def get_patient_by_id(db: Session, _id: int):
     patient = db.query(Patient).get(_id)
+
     if patient is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Patient with id {_id} not found")
@@ -54,11 +54,9 @@ def get_patient_by_id(db: Session, _id: int):
 
 
 def update_patient(db: Session, _id: int, dto: PatientCreateDto):
-    patient = db.query(Patient).filter(Patient.id == _id)
-    if patient is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Patient with id {_id} not found")
+    patient = get_patient_by_id(db, _id)
     patient.update(dto.dict())
     db.commit()
+
     return "done"
 

@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship, Session
 from starlette import status
 
 from app.api.doctors.dto.create_doctor import DoctorCreateDto
+from app.api.patients.patients_repository import get_patient_by_id
 from app.db.database import Database
 from app.models.user import association_table
 
@@ -30,25 +31,39 @@ def create_doctor(db: Session, dto: DoctorCreateDto):
     return db_user
 
 
+def get_doctor(db: Session, _id: int) -> Doctor:
+    doctor = db.query(Doctor).get(_id)
+
+    if doctor is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Doctor with id {_id} not found")
+
+    return doctor
+
+
+def assign_patient(_id: int, patient_id: int, db: Session):
+    patient = get_patient_by_id(db, patient_id)
+    doctor = get_doctor(db, _id)
+    doctor.patients.append(patient)
+    db.commit()
+
+
 def get_all_doctors(db: Session):
     return db.query(Doctor).all()
 
 
 def delete_doctor(db: Session, _id: int):
-    doctor_delete = db.query(Doctor).filter(Doctor.id == _id).delete()
-    if doctor_delete is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Patient with id {_id} not found")
-    # doctor_delete = db.query(Doctor).filter(Doctor.id == _id).delete()
+    doctor = get_doctor(db, _id)
+
+    doctor.delete()
     db.commit()
     return "Done"
 
 
 def update_doctor(db: Session, _id: int, dto: DoctorCreateDto):
-    doctor = db.query(Doctor).filter(Doctor.id == _id)
-    if doctor is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Patient with id {_id} not found")
+    doctor = get_doctor(db, _id)
+
     doctor.update(dto.dict())
     db.commit()
+
     return "done"
