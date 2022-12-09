@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship, Session
 from starlette import status
 
@@ -17,7 +17,8 @@ class Doctor(Database):
     last_name = Column(String)
     id = Column(Integer, primary_key=True)
     patients = relationship("Patient", secondary=association_table, back_populates="doctors")
-    # reports = relationship("Report", secondary=association_table, back_populates="owner_id")
+    report_id = Column(ForeignKey("quizzes_table.id"))
+    reports = relationship("Quizzes", back_populates="doctors")
     # specialization = relationship("Specialization", secondary=association_table, back_populates="doctors")
 
 

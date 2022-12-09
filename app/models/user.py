@@ -11,6 +11,13 @@ association_table = Table(
     Column("right_id", ForeignKey("doctor.id")),
 )
 
+association_table_2 = Table(
+    "association_table",
+    Database.metadata,
+    Column("left_id", ForeignKey("patient.id")),
+    Column("right_id", ForeignKey("quizzes.id")),
+)
+
 
 # class FieldType(enum.Enum):
 #     yesNo = 1
