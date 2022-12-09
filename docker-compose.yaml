@@ -2,6 +2,15 @@ version: "3"
 
 
 services:
+  postgres:
+    image: postgres:11
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=postgres
+      - POS
   app:
     restart: unless-stopped
     build:
@@ -9,5 +18,10 @@ services:
       dockerfile: ./Dockerfile
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     ports:
-      - "8000:8000/tcp"
-
+      - "8000:8000"
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    volumes:
+      - ./fastapi_app.db:/fastapi_app.db:delegated

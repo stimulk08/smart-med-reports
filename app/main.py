@@ -1,13 +1,13 @@
 import uvicorn
 from fastapi import FastAPI
-from api import app_router
-from app.db.database import Database, engine
+from api import routes
+from app.db.database import init_db
 
 
 def bootstrap() -> FastAPI:
     application = FastAPI()
-    Database.metadata.create_all(engine)
-    application.include_router(app_router)
+    init_db()
+    application.include_router(routes.app_router)
     return application
 
 

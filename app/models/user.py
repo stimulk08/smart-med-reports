@@ -4,18 +4,18 @@ from sqlalchemy.dialects.postgresql import JSON
 
 from app.db.database import Database
 
-association_table = Table(
-    "association_table",
+patient_doctor_table = Table(
+    "patient_doctor",
     Database.metadata,
-    Column("left_id", ForeignKey("patient.id")),
-    Column("right_id", ForeignKey("doctor.id")),
+    Column("patient_id", ForeignKey("patient.id")),
+    Column("doctor_id", ForeignKey("doctor.id")),
 )
 
-association_table_2 = Table(
-    "association_table",
+patient_quizzes_table = Table(
+    "patient_reports",
     Database.metadata,
-    Column("left_id", ForeignKey("patient.id")),
-    Column("right_id", ForeignKey("quizzes.id")),
+    Column("patient_id", ForeignKey("patient.id")),
+    Column("quiz_id", ForeignKey("quiz.id")),
 )
 
 
@@ -41,6 +41,7 @@ association_table_2 = Table(
 #     first_name = Column(String)
 #     last_name = Column(String)
 #
+
 #
 # class ReportTemplate(Database):
 #     __tablename__ = "report_template"

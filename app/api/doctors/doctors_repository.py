@@ -6,7 +6,7 @@ from starlette import status
 from app.api.doctors.dto.create_doctor import DoctorCreateDto
 from app.api.patients.patients_repository import get_patient_by_id
 from app.db.database import Database
-from app.models.user import association_table
+from app.models.user import patient_doctor_table
 
 
 class Doctor(Database):
@@ -17,7 +17,7 @@ class Doctor(Database):
     first_name = Column(String)
     last_name = Column(String)
     id = Column(Integer, primary_key=True)
-    patients = relationship("Patient", secondary=association_table, back_populates="doctors")
+    patients = relationship("Patient", secondary=patient_doctor_table, back_populates="doctors")
     report_id = Column(ForeignKey("quizzes_table.id"))
     reports = relationship("Quizzes", back_populates="doctors")
     # specialization = relationship("Specialization", secondary=association_table, back_populates="doctors")
