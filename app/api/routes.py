@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from app.api.quizzes.quizzes import router as quizzes_router
 from app.api.doctors.doctors import router as doctors_router
 from app.api.patients.router import router as patients_router
+from app.api.tags.routes import router as tags_router
 
 app_router = APIRouter()
 
