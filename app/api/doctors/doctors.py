@@ -21,13 +21,8 @@ def get_all_doctors(db: Session = Depends(get_db)):
 
 
 @router.get('/{id}')
-def get_doctor(id: int):
-    return {id}
-
-
-@router.get('/{id}/patients')
-def get_doctors_patients(limit: int):
-    return [i for i in range(limit)]
+def get_doctor(_id: int, db: Session = Depends(get_db)):
+    return doctors_repository.get_doctor(db, _id)
 
 
 @router.delete('/{id}')
@@ -35,9 +30,9 @@ def delete_doctor(id: int, db: Session = Depends(get_db)):
     return doctors_repository.delete_doctor(db, id)
 
 
-@router.patch('/{id}')
-def update_doctor(id: int, dto: DoctorCreateDto, db: Session = Depends(get_db)):
-    return doctors_repository.update_doctor(db, id, dto)
+@router.put('/{id}')
+def update_doctor(_id: int, dto: DoctorCreateDto, db: Session = Depends(get_db)):
+    return doctors_repository.update_doctor(db, _id, dto)
 
 
 @router.post('/')

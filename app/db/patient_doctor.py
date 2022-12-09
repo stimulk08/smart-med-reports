@@ -28,7 +28,6 @@ class Doctor(Database):
     tags = relationship("Tag", secondary=tag_doctor_table, back_populates='doctors')
 
 
-
 class Patient(Database):
     __tablename__ = "patient"
     login = Column(String)

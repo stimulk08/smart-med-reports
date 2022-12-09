@@ -2,7 +2,8 @@ from pydantic import BaseModel
 
 
 class QuizzesCreateDto(BaseModel):
-    pass
+    doctor_id: int
+    fields: list
 
     class Config:
         orm_mode = True
