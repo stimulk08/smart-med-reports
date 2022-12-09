@@ -18,3 +18,6 @@ class Quiz(Database):
     id = Column(Integer, primary_key=True)
     doctors = relationship("Doctor", secondary=doctor_quiz_table, back_populates='quizzes')
     patients = relationship("Patient", secondary=patient_quiz_table, back_populates='quizzes')
+    text_fields = relationship("TextField", back_populates='quizzes')
+    number_fields = relationship("NumberField", back_populates='quizzes')
+    choice_fields = relationship("ChoiceField", back_populates='quizzes')
